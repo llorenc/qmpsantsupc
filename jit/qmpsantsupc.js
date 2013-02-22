@@ -1,4 +1,6 @@
+// qmpsantsupc.js is a modified version of the following example provided with the jit library:
 // more info: http://philogb.github.com/jit/static/v20/Jit/Examples/Sunburst/example1.code.html
+// Jit library copyright applies to this file.
 
 var labelType, useGradients, nativeTextSupport, animate;
 

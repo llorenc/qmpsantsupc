@@ -1,4 +1,16 @@
 <?php 
+// Copyright (c) 2013 Llorenç Cerdà-Alabern, http://personals.ac.upc.edu/llorenc
+// This file is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// Foobar is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero Public License for more details.
+// You should have received a copy of the GNU Affero Public License
+// along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+
 $flist = glob("jsdata/??-??-??_??-??-??-graf.js") ;
 sort($flist) ;
 $jflist = array();
@@ -273,6 +285,7 @@ echo <<<EOD
        <div class="text">
           <b>Left click</b> to select a node.<br/>
 	  <a href="download.php?path=$ffile" rel="nofollow">Download graph</a><br/>
+          <a href="https://github.com/llorenc/qmpsantsupc">Download code</a><br/>
           <a href="http://qmp.cat" rel="nofollow">quick Mesh project (qMp)</a><br/>
           <a href="https://guifi.net/ca/node/54602">About the network</a><p/>
 	  <div style="text-align:left; font-size: 0.8em;">
@@ -302,8 +315,8 @@ echo <<<EOD
     </div>
     <div id="bottom-container">
     <div id="placeholder1" style="width:800px;height:100px;"></div>
-      <div style="text-align:left; font-size: 0.8em;">
-<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+      <div style="text-align:left; vertical-align:text-top; font-size: 0.8em;">
+<a rel="license" href="http://www.gnu.org/licenses/agpl.html"><img alt="GNU Affero Public License v3" style="border-width:0; vertical-align:text-top;" src="img/agplv3-88x31.png" /></a>This work is licensed under a <a rel="license" href="http://www.gnu.org/licenses/agpl.html">GNU Affero Public License version 3.0</a>.
     </div>
     </div>
     </div>
