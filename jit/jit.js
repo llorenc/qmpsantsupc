@@ -2665,7 +2665,7 @@
 			'left': 0,
 			'width': width + 'px',
 			'height': height + 'px',
-			'background-color':'#202020'
+			'background-color': '#202020'
 		    }
 		});
 	    },

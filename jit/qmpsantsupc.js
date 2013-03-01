@@ -82,63 +82,70 @@ function InfoNode(node, eventInfo, e) {
         $jit.id('inner-details').innerHTML = "" ;
 	return;
     }
-          var html = "<h3>" + node.name + "</h3>" +
-              "<h4>connections</h4><ul><li>", ans = [];
-          node.eachAdjacency(function(adj){
-              // if on the same level i.e siblings
-              if (adj.nodeTo._depth == node._depth) {
-		  ans.push(adj.nodeTo.name);
-              }
-          });
-	  html =  html + ans.join("</li><li>") + "</li></ul>" ;
-	  if(node.data.gw) {
-	      html = html + "<h4>" + "gw</h4><ul>" ;
-		  html = html + "<li>" + node.data.gw + "</li>" ;
-	  }
-	  html = html + "</ul>";
-	  if(node.data.ipv4) {
-	      html = html + "<h4>" + "ipv4</h4><ul>" ;
-	      for (var i in node.data.ipv4) {
-		  html = html + "<li>" + node.data.ipv4[i] + "</li>" ;
-	      }
-	  }
-	  html = html + "</ul>";
-	  if(node.data.ipv6gl) {
-	      html = html + "<h4>" + "ipv6gl</h4><ul>" ;
-	      for (var i in node.data.ipv6gl) {
-		  html = html + "<li>" + node.data.ipv6gl[i] + "</li>" ;
-	      }
-	  }
-	  html = html + "</ul>";
-	  if(node.data.ipv6ll) {
-	      html = html + "<h4>" + "ipv6ll</h4><ul>" ;
-	      for (var i in node.data.ipv6ll) {
-		  html = html + "<li>" + node.data.ipv6ll[i] + "</li>" ;
-	      }
-	  }
-	  html = html + "</ul>";
-	  if(node.data.gwguest) {
-	      html = html + "</ul>";
-	      html = html + "<h4>" + "Nodes using this gw</h4><ul>" ;
-	      for (var i in node.data.gwguest) {
-		  html = html + "<li>" + node.data.gwguest[i] + "</li>" ;
-	      }
-	      html = html + "</ul>";
-	  }
-          document.getElementById("right-container").style.backgroundImage = "url(jit/css/col2.png)";
-          $jit.id('inner-details').innerHTML = html ;
-
-	  // var x = { pointsize: "3", FlotData[node.name]} ;
-	  var x = FlotData[node.name] ;
-
-	  function someFunc(ctx, x, y, radius, shadow) 
-	  {
-	      ctx.beginPath();
-	      ctx.arc(x, y, radius * 1.5, 0, shadow ? Math.PI : Math.PI * 2, true);
-	      ctx.closePath();
-	      ctx.fillStyle = "#c82124"; //red
-	      ctx.fill();
-	  }
+    var html = "<h3>" + node.name + "</h3>" ;
+    var ans = [];
+    node.eachAdjacency(function(adj){
+        // if on the same level i.e siblings
+        if (adj.nodeTo._depth == node._depth) {
+	    ans.push(adj.nodeTo.name);
+        }
+    });
+    if(ans.length > 0) {
+	html =  html + "<h4>connections</h4><ol><li>" ;
+	html =  html + ans.join("</li><li>") + "</li></ol>" ;
+    }
+    if(node.data.gw) {
+	html = html + "<h4>" + "gw</h4><ul>" ;
+	html = html + "<li>" + node.data.gw + "</li>" ;
+	html = html + "</ul>";
+    }
+    if(node.data.gwpath && node.data.gwpath.length > 0) {
+	html = html + "<h4>" + "Hops to gw</h4><ol>" ;
+	for (var i in node.data.gwpath) {
+	    html = html + "<li>" + node.data.gwpath[i] + "</li>" ;
+	}
+	html = html + "</ol>";
+    }
+    if(node.data.ipv4.length > 0) {
+	html = html + "<h4>" + "ipv4</h4><ul>" ;
+	for (var i in node.data.ipv4) {
+	    html = html + "<li>" + node.data.ipv4[i] + "</li>" ;
+	}
+	html = html + "</ul>";
+    }
+    if(node.data.ipv6gl.length > 0) {
+	html = html + "<h4>" + "ipv6gl</h4><ul>" ;
+	for (var i in node.data.ipv6gl) {
+	    html = html + "<li>" + node.data.ipv6gl[i] + "</li>" ;
+	}
+	html = html + "</ul>";
+    }
+    if(node.data.ipv6ll.length > 0) {
+	html = html + "<h4>" + "ipv6ll</h4><ul>" ;
+	for (var i in node.data.ipv6ll) {
+	    html = html + "<li>" + node.data.ipv6ll[i] + "</li>" ;
+	}
+	html = html + "</ul>";
+    }
+    if(node.data.gwguest && node.data.gwguest.length > 0) {
+	html = html + "<h4>" + "Nodes using this gw</h4><ol>" ;
+	for (var i in node.data.gwguest) {
+	    html = html + "<li>" + node.data.gwguest[i] + "</li>" ;
+	}
+	html = html + "</ol>";
+    }
+    document.getElementById("right-container").style.backgroundImage = "url(jit/css/col2.png)";
+    $jit.id('inner-details').innerHTML = html ;
+    // var x = { pointsize: "3", FlotData[node.name]} ;
+    var x = FlotData[node.name] ;
+    function someFunc(ctx, x, y, radius, shadow) 
+    {
+	ctx.beginPath();
+	ctx.arc(x, y, radius * 1.5, 0, shadow ? Math.PI : Math.PI * 2, true);
+	ctx.closePath();
+	ctx.fillStyle = "#c82124"; //red
+	ctx.fill();
+    }
     if(x) {
 	x.points = { show: true, symbol: someFunc} ;
 	x.color = "#c82124"; //red

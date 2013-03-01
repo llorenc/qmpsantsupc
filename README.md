@@ -17,6 +17,7 @@ script build-flot-data.pl to create the corresponding file
 jsdata/the-new-jsfile.flot and update flot_data.js as follows:
 
 ./build-flot-data.pl -g jsdata/the-new-jsfile.js -v 'flotdata,flotgraph' jsdata/the-new-jsfile.flot
+
 ./build-flot-data.pl flot_data.js
 
 The files flot_data.js and jsdata/the-new-jsfile.flot are used to

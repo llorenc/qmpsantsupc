@@ -85,17 +85,17 @@ a {
     background-repeat:no-repeat;
     border-bottom:1px solid #ddd;
     left:0;
-    background-image:url('col2.png');
+    background-image:url('col1.png');
     background-position:center right;
     border-left:1px solid #ddd;
 }
 
 #info-container {
     width:200px;
-    height:270px;
+    height:290px;
     position:absolute;
     left:0px;
-    top:430px;
+    top:410px;
     color:#686c70;
     text-align: left;
     overflow: auto;
@@ -123,7 +123,11 @@ a {
 
 #right-container h4{
    margin-bottom:0px;
-     text-indent:8px;
+   text-indent:8px;
+}
+
+#right-container h3{
+   text-indent:8px;
 }
 
 #right-container p{
@@ -175,6 +179,8 @@ a {
     height:600px;
     margin:auto;
     overflow:hidden;
+  background-image:url('gradient.png');
+  background-position:center;
 }
 
 /*TOOLTIPS*/
