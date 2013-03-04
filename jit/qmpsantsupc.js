@@ -134,6 +134,11 @@ function InfoNode(node, eventInfo, e) {
 	}
 	html = html + "</ol>";
     }
+    if(node.data.date) {
+	html = html + "<h4>" + "Capture date</h4><ul>" ;
+	html = html + "<li>" + node.data.date + "</li>" ;
+	html = html + "</ul>";
+    }
     document.getElementById("right-container").style.backgroundImage = "url(jit/css/col2.png)";
     $jit.id('inner-details').innerHTML = html ;
     // var x = { pointsize: "3", FlotData[node.name]} ;
