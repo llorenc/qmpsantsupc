@@ -203,10 +203,10 @@ a {
 #popup {
     display:none;
     position: fixed;
-    width:250px;
-    height: 270px;
+    width:400px;
+    height: 250px;
     top: 50%;
-    left: 50%;
+    left: 30%;
     margin-left:-155px;
     margin-top:-110px;
     border:2px solid red;
@@ -223,7 +223,7 @@ a {
 }
 #content {
     height:auto;
-    width:250px;
+    width:auto;
     margin:2px auto;
 }
 #popupclose {

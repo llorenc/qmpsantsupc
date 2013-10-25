@@ -122,6 +122,18 @@ if(file_exists($gflot)) {
  }
 
 echo <<<EOD
+    function showTooltip(x, y, contents) {
+      $("<div id='tooltip'>" + contents + "</div>").css({
+    	position: "absolute",
+    	    display: "none",
+    	    top: y + 5,
+    	    left: x + 5,
+    	    border: "1px solid #fdd",
+    // 	    padding: "2px",
+    	    "background-color": "#fee",
+    // 	    opacity: 0.80
+    	    }).appendTo("body").fadeIn(200);
+    }
 $(function(){
     $('#popuplink').click(function(){
 	$('#popup').show("slow");
@@ -132,10 +144,39 @@ $(function(){
   });
 $(function () {
     var curr = [[$curr_file, FlotMin], [$curr_file, FlotMax]] ;
-    $.plot($("#placeholder1"), [ { label: "bidir", data: FlotBidir}, 
-			       { label: "nodes", data: FlotNodes}, 
-			       { label: "unidir", data: FlotUnidir}, 
-			       curr ], {legend:{position: "nw"} });
+    var plotcap = $.plot($("#placeholder1"), 
+			 [ { label: "bidir", data: FlotBidir}, 
+			   { label: "nodes", data: FlotNodes}, 
+			   { label: "unidir", data: FlotUnidir}, 
+			   curr ], 
+			 { legend:{position: "nw"},
+			     grid: { hoverable: true, clickable: true}
+			 }) ;
+    var previousCapturePoint = null;
+    $("#placeholder1").bind("plothover", function (event, pos, item) {
+	var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+    	$("#hoverdata").text(str);
+	if (item) {
+	  if (previousCapturePoint != item.dataIndex) {	  
+	    previousCapturePoint = item.dataIndex;
+	    $("#tooltip").remove();
+	    var x = item.datapoint[0].toFixed(2),
+	      y = item.datapoint[1].toFixed(2);
+	    showTooltip(item.pageX, item.pageY, y);
+	  }
+	} else {
+	  $("#tooltip").remove();
+	  previousCapturePoint = null;
+	}
+      });
+    $("#placeholder1").bind("plotclick", function (event, pos, item) {
+	if(item) {
+	  var x = item.datapoint[0].toFixed(2) ;
+	  var url = window.location.href + '?cap=' + parseInt(x) ;
+	  // window.location.href = url;
+	  window.location = window.location.pathname + '?cap=' + parseInt(x) ;
+	}
+      });
 });
 
 function callinfonode(node) {
@@ -198,18 +239,6 @@ $(function () {
 			}));
 	ZoomActive = true ;
       });
-    function showTooltip(x, y, contents) {
-      $("<div id='tooltip'>" + contents + "</div>").css({
-    	position: "absolute",
-    	    display: "none",
-    	    top: y + 5,
-    	    left: x + 5,
-    	    border: "1px solid #fdd",
-    // 	    padding: "2px",
-    	    "background-color": "#fee",
-    // 	    opacity: 0.80
-    	    }).appendTo("body").fadeIn(200);
-    }
     var previousPoint = null;
     $("#placeholder2").bind("plothover", function (event, pos, item) {
 	var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
@@ -318,11 +347,13 @@ echo <<<EOD
     <div id="popup">
     <div id="content">
     <ul>
-      <li><b>Left click</b> to select a node.<br/></li>
+      <li>A new <b>capture</b> is added hourly.</li>
+      <li><b>Left click</b> to select a node.</li>
       <li><b>Unidirectional</b> links are rendered with thinner lines.</li>
       <li><b>Green nodes</b> advertize a default route.</li>
       <li>Use top left <b>arrows</b> to navigate throught the captures.</li>
       <li>Use the <b>capture</b> button to choose a specific capture.</li>
+      <li>Click on the botton <b>capture graph</b> to go to a specific capture.</li>
       <li>In the <b>Graph projection</b> select region to zoom-in, click canvas to zoom-out.</li>
     </ul>
     <input id="popupclose" type="Button" value="Close"/>   
