@@ -55,7 +55,7 @@ a {
   background-color:#fff;
   height:100px;
   width:800px;
-  position:relative;
+  position:absolute;
   top:600px;
   background-repeat:no-repeat;
   border-bottom:1px solid #ddd;
@@ -65,16 +65,16 @@ a {
 {
   background-color:#fff;
   width:300px;
-  height:230px;
+  height:220px;
   position:absolute;
   left:800px;
-  top:470px;
+  top:480px;
   background-repeat:no-repeat;
   border-bottom:1px solid #ddd;
 }
 
 #left-container {
-    height:470px;
+    height:370px;
     position:absolute;
     top:0;
     width:200px;
@@ -92,20 +92,20 @@ a {
 
 #info-container {
     width:200px;
-    height:290px;
+    height:230px;
     position:absolute;
     left:0px;
-    top:410px;
+    top:370px;
     color:#686c70;
     text-align: left;
-    overflow: auto;
+    overflow: hidden;
     background-color:#fff;
     background-repeat:no-repeat;
     border-bottom:1px solid #ddd;
 }
 
 #right-container {
-    height:470px;
+    height:480px;
     position:absolute;
     top:0;
     width:300px;
@@ -198,4 +198,35 @@ a {
     font-size:10px;
     font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
     padding:7px;
+}
+
+#popup {
+    display:none;
+    position: fixed;
+    width:250px;
+    height: 270px;
+    top: 50%;
+    left: 50%;
+    margin-left:-155px;
+    margin-top:-110px;
+    border:2px solid red;
+    background-color:#DEDFDE;
+    padding:5px;
+    z-index:102;
+    font-family:Verdana;
+    font-size:10pt;
+    border-radius:10px;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    text-align: left;
+    text-indent:0px;
+}
+#content {
+    height:auto;
+    width:250px;
+    margin:2px auto;
+}
+#popupclose {
+    margin:10px 0 0 20px;
+    width:50px;
 }

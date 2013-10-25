@@ -74,29 +74,63 @@ function ClickNode(node) {
 }
     
 function InfoNode(node, eventInfo, e) {
-    if (!node) {
+    if (!node || (node.name == '')) {
 	return;
     }
     if(!node.selected) {
         document.getElementById("right-container").style.backgroundImage = "url('img/antenes-mv.jpg')";
         $jit.id('inner-details').innerHTML = "" ;
+	document.input.currnode.value = "" ;
 	return;
     }
     var html = "<h3>" + node.name + "</h3>" ;
     var ans = [];
+    if(document.input.currnode) {
+	    document.input.currnode.value = node.name ;
+    }
     node.eachAdjacency(function(adj){
         // if on the same level i.e siblings
         if (adj.nodeTo._depth == node._depth) {
-	    ans.push(adj.nodeTo.name);
+	    var info = "" ;
+	    if(adj.data.rtt) {
+		info = "<font color='green'>" + adj.data.rtt + "</font>" ;
+	    } 
+	    info = info + "/" ;
+	    if(adj.data.bw) {
+		var bw = "<font color='red'>" + adj.data.bw + "</font>" ;
+		info = info + bw ;
+	    }
+	    info = info + "/" ;
+	    if(adj.data.channel) {
+		var channel = "<font color='" + adj.data.$color + "'>" + adj.data.channel + "</font>" ;
+		info = info + channel ;
+	    }
+	    ans.push(adj.nodeTo.name + " (" + info + ")");
         }
     });
     if(ans.length > 0) {
-	html =  html + "<h4>connections</h4><ol><li>" ;
+	html =  html + "<h4>connections (<font color='green'>RTT[ms]</font>/<font color='red'>Bw[Mbps]</font>/<font color='black'>ch</font>)</h4><ol><li>" ;
 	html =  html + ans.join("</li><li>") + "</li></ol>" ;
     }
     if(node.data.gw) {
 	html = html + "<h4>" + "gw</h4><ul>" ;
-	html = html + "<li>" + node.data.gw + "</li>" ;
+	var info ;
+	if(node.data.gwrtt) {
+	    info = "<font color='green'>" + node.data.gwrtt + "</font>" + "/" ;
+	}
+	if(node.data.gwbw) {
+	    var bw = "<font color='red'>" + node.data.gwbw + "</font>" ;
+	    if(info) {
+		info = info + bw ;
+	    } else {
+		info = "/" + bw ;
+	    }
+	}
+	if(info) {
+	    html = html + "<li>" + node.data.gw  + " (" + info + ")" + "</li>" ;
+	} else {
+	    html = html + "<li>" + node.data.gw + "</li>" ;
+	}
 	html = html + "</ul>";
     }
     if(node.data.gwpath && node.data.gwpath.length > 0) {
@@ -104,23 +138,35 @@ function InfoNode(node, eventInfo, e) {
 	for (var i in node.data.gwpath) {
 	    html = html + "<li>" + node.data.gwpath[i] + "</li>" ;
 	}
-	html = html + "</ol>";
+	html = html + "</ol>" ;
     }
-    if(node.data.ipv4.length > 0) {
+    if(node.data.internetbw || node.data.internetrtt) {
+	html = html + "<h4>" + "Internet test</h4><ul>" ;
+	if(node.data.internetrtt) {
+	    html =  html + "<li><font color='green'>RTT[ms] " + node.data.internetrtt +
+		"</font></li>" ;
+	}
+	if(node.data.internetbw) {
+	    html =  html + "<li><font color='red'>Bw[Mbps] "+ node.data.internetbw +
+		"</font></li>" ;
+	}
+	html = html + "</ul>" ;
+    }
+    if(node.data.ipv4 && node.data.ipv4.length > 0) {
 	html = html + "<h4>" + "ipv4</h4><ul>" ;
 	for (var i in node.data.ipv4) {
 	    html = html + "<li>" + node.data.ipv4[i] + "</li>" ;
 	}
 	html = html + "</ul>";
     }
-    if(node.data.ipv6gl.length > 0) {
+    if(node.data.ipv6gl && node.data.ipv6gl.length > 0) {
 	html = html + "<h4>" + "ipv6gl</h4><ul>" ;
 	for (var i in node.data.ipv6gl) {
 	    html = html + "<li>" + node.data.ipv6gl[i] + "</li>" ;
 	}
 	html = html + "</ul>";
     }
-    if(node.data.ipv6ll.length > 0) {
+    if(node.data.ipv6ll && node.data.ipv6ll.length > 0) {
 	html = html + "<h4>" + "ipv6ll</h4><ul>" ;
 	for (var i in node.data.ipv6ll) {
 	    html = html + "<li>" + node.data.ipv6ll[i] + "</li>" ;
@@ -133,6 +179,16 @@ function InfoNode(node, eventInfo, e) {
 	    html = html + "<li>" + node.data.gwguest[i] + "</li>" ;
 	}
 	html = html + "</ol>";
+    }
+    if(node.data.system) {
+	html = html + "<h4>" + "System</h4><ul>" ;
+	html = html + "<li>" + node.data.system + "</li>" ;
+	html = html + "</ul>";
+    }
+    if(node.data.qmpversion) {
+	html = html + "<h4>" + "qMp version</h4><ul>" ;
+	html = html + "<li>" + node.data.qmpversion + "</li>" ;
+	html = html + "</ul>";
     }
     if(node.data.date) {
 	html = html + "<h4>" + "Capture date</h4><ul>" ;
@@ -258,5 +314,9 @@ function init(){
   jsSunburst.loadJSON(json);
   // compute positions and plot.
   jsSunburst.refresh();
+  // Show info of the current selected node.
+  if(document.input.currnode.value.length > 0) {
+      callinfonode(document.input.currnode.value) ;
+  }
   //end
 }

@@ -57,7 +57,7 @@ sub noempty($) {
   return(defined($_[0]) && ($_[0] ne "")) ;
 }
 
-foreach my $f (`ls $sdir/jsdata/??-??-??_??-??-??-graf.js`) {
+foreach my $f (`find $sdir/jsdata -follow -name '??-??-??_??-??-??-graf.js' | sort`) {
   my $pref = $f ; chomp $pref ;
   $pref =~ s/^.*(..)-(..)-(..)_(..)-(..)-(..).*$/$3-$2-$1 $4:$5:$6/ ;
   open FILE, "<$f" or die $!;
