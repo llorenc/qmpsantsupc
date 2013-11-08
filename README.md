@@ -6,7 +6,7 @@ qMp wireless mesh network monitoring
 This work is designed to monitor the topology and some parameters of a
 wireless mesh network, as in the following example:
 
-http://compnet.ac.upc.edu/~llorenc/qmpsantsupc/index.php
+http://tomir.ac.upc.edu/qmpsu/index.php
 
 Usage: Install the files in a web server with php support and open index.php in a browser.
 

@@ -25,6 +25,9 @@ if(isset($_POST["currnode"])) {
  } else {
   $currnode = "" ;
  }
+if(isset($_GET["node"])) {
+  $currnode = $_GET["node"] ;
+ }
 
 $num_files = count($jflist) ;
 $last = $num_files-1 ;
@@ -369,7 +372,7 @@ echo <<<EOD
           <a href="https://guifi.net/ca/node/54602">About the network</a><br/>
           <a href="http://guifisants.net">About GuifiSants</a><br/>
           <a href="http://qmp.cat" rel="nofollow">quick Mesh project (qMp)</a><br/>
-	    Built by <a href="http://personals.ac.upc.edu/llorenc">Llorenç Cerdà-Alabern</a><br/>
+	    Built by <a href="http://personals.ac.upc.edu/llorenc">Llorenç Cerdà-Alabern</a>
 	    using <a href="http://philogb.github.com/jit"> JavaScript InfoVis Toolkit</a>
             and  <a href="http://www.flotcharts.org"> Flot</a><br/>
          <table border="0" style="margin-left:0;margin-top:0">
