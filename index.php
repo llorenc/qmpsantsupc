@@ -91,6 +91,7 @@ echo <<<EOD
   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta http-equiv="refresh" content="1800" /> 
       <title>qMp Sants-UPC</title>
       <link type="text/css" href="jit/css/base.css" rel="stylesheet" />
       <link type="text/css" href="jit/css/Sunburst.css" rel="stylesheet" />
@@ -281,8 +282,8 @@ $(function () {
     </head>
     <body onload="loadScriptList('$ffile', init);">
       <form  name="input" action="index.php" method="post">
-	<input type="hidden" name="curridx" value="$curridx"/>
-        <input type="hidden" name="currnode" value="$currnode"/>
+	<input type="hidden" name="curridx" id="curridx"  value="$curridx"/>
+        <input type="hidden" name="currnode" id="currnode" value="$currnode"/>
 	<div id="container">
 	  <div id="left-container">
 	    <div id="text-details">
@@ -322,8 +323,8 @@ $nodes = $json->JSgraph[0]->data->nodes ;
 //var_dump($val) ;
 echo <<<EOD
     <ul>
-    <li><b><input name="capture" type="submit" value="Capture" class="forButton"/>:</b> 
-  <input name="tocap" value="$curr_file" type="text" class="forButton" size="5"/>/$num_files</li>
+    <li><b><input name="capture" type="submit" value="Capture" class="forButton" style="padding:1px;border-width:1px" size="4"/>:</b> 
+  <input name="tocap" value="$curr_file" type="text" class="forButton" size="4"/>/$num_files</li>
     <li><b>Date of the capture:</b><br/>${day}-${month}-${year} $h:$m:$s<br/>
 	      </li>
 	      <li><b>Nodes:</b> $nodes</li>
@@ -341,6 +342,7 @@ EOD;
  if($icol % 2 == 0) { echo "</tr>" ; }
 }
 array_walk($colors, 'col_print');
+
 echo <<<EOD
              </table>
 	    </ul>

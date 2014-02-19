@@ -83,7 +83,12 @@ function InfoNode(node, eventInfo, e) {
 	document.input.currnode.value = "" ;
 	return;
     }
-    var html = "<h3>" + node.name + "</h3>" ;
+    var capture_number = parseInt(document.getElementById("curridx").value)+1;
+    var link_capture = window.location.href.toString().split(window.location.host)[1] ;
+    link_capture = link_capture.replace("#", "");
+    link_capture = link_capture.split('?')[0] + 
+	"?cap=" + capture_number + "&node=" + node.name ;
+    var html = "<h3><a href='" + link_capture + "'>" + node.name + "</a></h3>" ;
     var ans = [];
     if(document.input.currnode) {
 	    document.input.currnode.value = node.name ;
@@ -109,21 +114,21 @@ function InfoNode(node, eventInfo, e) {
         }
     });
     if(ans.length > 0) {
-	html =  html + "<h4>connections (<font color='green'>RTT[ms]</font>/<font color='red'>Bw[Mbps]</font>/<font color='black'>ch</font>)</h4><ol><li>" ;
+	html =  html + "<h4>connections <span style='font-size: 70%'>(<font color='green'>RTT[ms]</font>/<font color='red'>Bw[Mbps]</font>/<font color='black'>ch</font>)</span></h4><ol><li>" ;
 	html =  html + ans.join("</li><li>") + "</li></ol>" ;
     }
     if(node.data.gw) {
-	html = html + "<h4>" + "gw</h4><ul>" ;
+	html = html + "<h4>" + "Default gateway <span style='font-size: 70%'>(<font color='green'>RTT[ms]</font>/<font color='red'>Bw[Mbps]</font>)</span></h4><ul>" ;
 	var info ;
 	if(node.data.gwrtt) {
 	    info = "<font color='green'>" + node.data.gwrtt + "</font>" + "/" ;
 	}
 	if(node.data.gwbw) {
-	    var bw = "<font color='red'>" + node.data.gwbw + "</font>" ;
+	    var gwbw = "<font color='red'>" + node.data.gwbw + "</font>" ;
 	    if(info) {
-		info = info + bw ;
+		info = info + gwbw ;
 	    } else {
-		info = "/" + bw ;
+		info = "/" + gwbw ;
 	    }
 	}
 	if(info) {
@@ -134,11 +139,39 @@ function InfoNode(node, eventInfo, e) {
 	html = html + "</ul>";
     }
     if(node.data.gwpath && node.data.gwpath.length > 0) {
-	html = html + "<h4>" + "Hops to gw</h4><ol>" ;
+	html = html + "<h4>" + "Hops to default gateway</h4><ol>" ;
 	for (var i in node.data.gwpath) {
 	    html = html + "<li>" + node.data.gwpath[i] + "</li>" ;
 	}
 	html = html + "</ol>" ;
+    }
+    if(node.data.community_gw && (node.data.community_gw != node.data.gw)) {
+	html = html + "<h4>" + "Community gateway <span style='font-size: 70%'>(<font color='green'>RTT[ms]</font>/<font color='red'>Bw[Mbps]</font>)</span></h4><ul>" ;
+	var community_info ;
+	if(node.data.community_gwrtt) {
+	    community_info = "<font color='green'>" + node.data.community_gwrtt + "</font>" + "/" ;
+	}
+	if(node.data.community_gwbw) {
+	    var community_bw = "<font color='red'>" + node.data.community_gwbw + "</font>" ;
+	    if(community_info) {
+		community_info = community_info + community_bw ;
+	    } else {
+		community_info = "/" + community_bw ;
+	    }
+	}
+	if(community_info) {
+	    html = html + "<li>" + node.data.community_gw  + " (" + community_info + ")" + "</li>" ;
+	} else {
+	    html = html + "<li>" + node.data.community_gw + "</li>" ;
+	}
+	html = html + "</ul>";
+	if(node.data.community_gwpath && node.data.community_gwpath.length > 0) {
+	    html = html + "<h4>" + "Hops to community gateway</h4><ol>" ;
+	    for (var i in node.data.community_gwpath) {
+		html = html + "<li>" + node.data.community_gwpath[i] + "</li>" ;
+	    }
+	    html = html + "</ol>" ;
+	}
     }
     if(node.data.internetbw || node.data.internetrtt) {
 	html = html + "<h4>" + "Internet test</h4><ul>" ;
